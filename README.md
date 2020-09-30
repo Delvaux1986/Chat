@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 ### Challenge de groupe Chat (Node.js) 
@@ -47,3 +48,6 @@ Nous commencons en ce moment meme .
 [Robby Delvaux](https://github.com/Delvaux1986)
 
 ![Becode_logo](./assets/img/becode.png)
+=======
+# Chat
+>>>>>>> d6f7c2d2c90ecafd64d9436ce2dda115eefe3686
