@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 
 
 ### Challenge de groupe Chat (Node.js) 
