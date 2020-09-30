@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Becode Chat</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; display:flex; flex-direction: column; align-items: center;}
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width:50%; margin:0 auto; }
+      form input { border: 0; padding: 10px; width: 70%; margin:0 auto; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; color: rgb(163, 64, 64)}
+      #messages li:nth-child(odd) { color: #333; }
+    </style>
+  </head>
+  <body>
+    <ul id="messages"></ul>
+    <form action="">
+      <input id="user" autocomplete="off" placeholder="Your Name">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+    $(function () {
+        var socket = io();
+        $('form').submit(function(e) {
+        e.preventDefault(); // prevents page reloading
+        socket.emit('chat message', $('#m').val(), $('#user').val()); 
+            $('#m').val('');
+            $('#user').val('');
+            return false;
+        });
+        socket.on('chat message', function(msg , user){
+            $('#messages').append($('<span>').text(user)); 
+            $('#messages').append($('<li>').text(msg));
+                   
+        });
+    });
+    
+</script>
+  </body>
+</html>

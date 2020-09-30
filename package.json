@@ -1,0 +1,25 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "Chat online",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev" : "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Delvaux1986/Chat.git"
+  },
+  "author": "Team One",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Delvaux1986/Chat/issues"
+  },
+  "homepage": "https://github.com/Delvaux1986/Chat#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "socket.io": "^2.3.0"
+  }
+}
