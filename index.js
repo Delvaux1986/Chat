@@ -1,32 +1,64 @@
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+let express = require('express');
+let app = express();
+let path = require('path');
+let server = require('http').createServer(app);
+let io = require('socket.io')(server);
+var port =  5000;
 
-http.listen(5000, () => {
-    console.log('listening on *:5000');
-  });
+
+let me = false;
+let userinchat = 0;
+
+
+server.listen(port, () => {
+  console.log('Server listening at port %d', port);
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+  
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 io.on('connection', (socket) => {
-    console.log(`a user ${socket.id}`);
+    console.log(`a user ${me}`);
     socket.on('disconnect', () => {
       console.log('user disconnected');
     });
   });
 
-  io.on('connection', (socket) => {
-    socket.on('chat message', (msg , user) => {
-      io.emit('chat user', user);
-      io.emit('chat message', msg);
+io.sockets.on('connection', (socket) => {
+    
+    // LOGIN 
+    socket.on('login' , (user)=>{
+      me = user;
+      me.id = userinchat++;
+      socket.emit('logged');
+      console.log(user);
+      io.sockets.emit('newuser' , me);
+
     });
+    // ON A RECU UN MSG
+    socket.on('newmsg' , (message) =>{
+      message.user = me;
+      date = new Date();
+      message.h = date.getHours();
+      message.m = date.getMinutes();
+      io.sockets.emit('newmsg', message);
+    });
+
+    // UN UTILISATEUR SE DECO
+    socket.on('disconnect', (userinchat) =>{
+      if(!me){
+        return false;
+      }
+      me.id = userinchat--;
+      io.sockets.emit('userdisco' , me);
+    })
+    
   });
 
-io.on('new user' , (socket) => {
-    io.emit(`${socket.id} as connected !`);
-});
 
 
 
@@ -35,4 +67,4 @@ io.on('new user' , (socket) => {
 
 
 
-  require("./routes/userRoutes")(app);  
+

@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Becode Chat</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div id="login" class="text-center rounded">
+      <h1>Bienvenue</h1>
+          <p>Ceci est un chat en Node.js , entrez votre pseudo </p>
+      <form action="" id="loginform" class="text-center rounded">
+          <input type="text" name="login" id="username" placeholder="Votre pseudo" autocomplete="off">
+          <input type="submit" id="senduser" value="Envoyer">
+      </form><br>
+    </div>
+    <div class="userinchat">
+
+    </div>
+    >
+      <div id="messages" >
+        <div class="message" id="msgtpl" style="display:none;">
+          <div class="info text-center">
+            <p><strong>{{user.username}}</strong></p>
+              <p>{{message}}</p>
+            <span class="date">{{h}}:{{m}}</span>
+          </div>
+        </div>
+      </div>
+        <form action="" id="tchatinput" class="text-center fixed-bottom rounded mb-4">
+          <input id="message" autocomplete="off" placeholder="Votre message">
+          <input id="m" type="submit" value="Envoyer">
+        </form>
+    
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/mustache.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/user.js"></script>
+  </body>
+</html>

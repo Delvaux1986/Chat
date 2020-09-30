@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    box-sizing:border-box;
+}
+
+body{ 
+    font: 18px Helvetica, Arial;
+    color:blue;
+    
+}
+h1{
+    color:blue;
+}
+p{
+    color:blue;
+}
+form{ 
+    background: #000;
+    padding: 3px;
+    width:50%;
+    margin:0 auto;
+}
+form input{
+    border: 0;
+    padding: 10px;
+    margin:0 auto; 
+}
+form button{
+    width: 9%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px; }
+.message{
+    display:flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content:center ;
+    height:24px;
+    background-color: white;
+}
+
+#messages{ 
+    margin: 0 auto;
+    padding: 0; 
+}
+#loginform{
+    display:block;
+    width:50%;
+}
+#tchatinput{
+    
+    margin-left: auto;
+}
+#messages li{ 
+    padding: 5px 10px; 
+    color: rgb(163, 64, 64);
+}
+#messages li:nth-child(odd){
+    color: #333;
+}
+#login{
+    background-color: #A9A9A9	;
+}
