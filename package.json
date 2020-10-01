@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/Delvaux1986/Chat#readme",
   "dependencies": {
-    "express": "^4.15.2",
+    "express": "^4.17.1",
     "finalhandler": "^1.1.2",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.7",
     "mustache": "^4.0.1",
     "nodemon": "^2.0.4",
     "serve-static": "^1.14.1",

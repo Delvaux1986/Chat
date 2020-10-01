@@ -31,15 +31,15 @@ form button{
     border: none;
     padding: 10px; }
 .message{
-    display:flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content:center ;
-    height:24px;
+    
     background-color: white;
 }
 
 #messages{ 
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content:center ;
     margin: 0 auto;
     padding: 0; 
 }
@@ -51,13 +51,7 @@ form button{
     
     margin-left: auto;
 }
-#messages li{ 
-    padding: 5px 10px; 
-    color: rgb(163, 64, 64);
-}
-#messages li:nth-child(odd){
-    color: #333;
-}
+
 #login{
     background-color: #A9A9A9	;
 }
