@@ -17,6 +17,7 @@
       socket.on('logged' , ()=>{
             $('#loginform').fadeOut();
             $('#registerform').fadeOut();
+            $('#tchatinput').fadeIn();
             $('#message').focus();
           });
 
@@ -42,8 +43,9 @@
     socket.on('newmsg' , (msg) => {
       // RECUP LE MODEL
       // ET DISPLAY LE MSG
-      // if ($('#messages')[0].childElementCount >= 5) $('#messages')[0].removeChild($('#messages')[0].children[0]);
-
+      let date = new Date(msg.date);
+      msg.date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
+      if ($('#messages')[0].childElementCount >= 20) $('#messages')[0].removeChild($('#messages')[0].children[0]);
       $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
       window.scrollTo(0,document.body.scrollHeight);
     })
@@ -51,8 +53,11 @@
     // RECUP DES MESSAGE LORS DE LA CO DE L USER
     socket.on('displaymessages' , (allmessages) =>{
       for(let k = allmessages.length -1 ; k >= 0 ; k--){
+        let date = new Date(allmessages[k].date);
+        allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
         $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
       }
+      window.scrollTo(0,document.body.scrollHeight);
     });
 
     // Inscription

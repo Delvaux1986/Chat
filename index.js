@@ -109,7 +109,9 @@ io.sockets.on('connection', (socket) => {
       message.user = me;
       message.date = new Date();
       console.log(message);
+       // QUAND DB OK DELETE
       let msg = new Msg({user: message.user.username , message: message.message , date: message.date});
+      console.log(msg);
         msg.save((err)=>{
           if(!err){
           console.log("Data Bien ajouté.");

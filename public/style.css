@@ -35,17 +35,40 @@ main {
 
 .message {
     background-color: white;
-    margin: 1rem 5rem;
-    max-width: 15rem;
+    /* margin: 1rem 50% 1rem auto; */
+    margin: 1rem auto 1rem 50%; /* A supprimer */
+    width: 15rem;
     border: 0.15rem solid black;
     border-radius: 1rem;
+    align-self: center;
 }
 
 .message-old {
     background-color: lightgrey;
+    margin: 1rem 50% 1rem auto; /* A supprimer */
+}
+
+.message-self {
+    margin: 1rem auto 1rem 50%;
+}
+
+.messagebody {
+    margin: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.messagedate {
+    margin: 0.2rem;
 }
 
 .userform {
     display: flex;
     flex-direction: column;
+    max-width: 20rem;
+    margin: 2rem;
+    align-self: center;
+}
+
+#tchatinput {
+    display: none;
 }
