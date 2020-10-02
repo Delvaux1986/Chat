@@ -10,7 +10,6 @@ var session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 let path = require('path');
-const md5 = require('MD5');
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
 const port =  5000;
@@ -80,10 +79,8 @@ io.sockets.on('connection', (socket) => {
     // LOGIN 
     socket.on('login' , async (user , req , res)=>{
       me = user;
-      
       socket.emit('logged');
       users[me.id] = me;
-      //--------------------------
       const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
       socket.emit('displaymessages', allmessages );
       io.sockets.emit('newuser' , me);
@@ -93,9 +90,9 @@ io.sockets.on('connection', (socket) => {
     socket.on('newmsg' , (message) =>{
       message.user = me;
       message.date = new Date();
-      
+      console.log(message);
        // QUAND DB OK DELETE
-      let msg = new Msg({user: message.user.username , message: message.message , date: message.date});
+      let msg = new Msg({user: message.user.usernamelogin , message: message.message , date: message.date});
       console.log(msg);
         msg.save((err)=>{
           if(!err){
@@ -105,9 +102,20 @@ io.sockets.on('connection', (socket) => {
           else{console.log("Error : " +err)}
           // mongoose.connection.close();
         });
-       
       });
+      socket.on('register' , async (user) => {
+        console.log(user);
+        let newuser = new User({username: user.username , password: MD5(user.password)});
+        newuser.save((err)=>{
+          if(!err){
+          console.log("User bien enregistrer");
+          io.sockets.emit('registed');
+          }
+          else{console.log("Error : " +err)}
+        });
 
+      })
+      
     
 
     // UN UTILISATEUR SE DECO

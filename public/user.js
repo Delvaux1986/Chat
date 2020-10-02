@@ -9,8 +9,8 @@
     $('#loginform').submit((event)=>{
         event.preventDefault();
         socket.emit('login' , {
-            username : $('#username').val(),
-            mail : $('#email').val()
+            username : $('#usernamelogin').val(),
+            password : $('#passwordlogin').val()
         }); 
       });
 
@@ -55,9 +55,10 @@
     // Inscription
     $('#registerform').submit((event) =>{
       event.preventDefault();
-      socket.emit('register', {login: $('#username').val() , password: $('#password').val()});
-      $('#username').val('');
-      $('#password').val('');
+
+      socket.emit('register', {username: $('#usernameregister').val() , password: $('#passwordregister').val()});
+      $('#usernameregister').val('');
+      $('#passwordregister').val('');
       $('#message').focus();
       $('#registerform').fadeOut();
     })
