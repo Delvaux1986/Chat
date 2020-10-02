@@ -3,39 +3,48 @@
   <head>
     <title>Becode Chat</title>
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   </head>
   <body>
-    <div id="login" class="text-center rounded">
+
+    <header id="login">
       <h1>Bienvenue</h1>
-          <p>Ceci est un chat en Node.js , entrez votre pseudo </p>
-      <form action="" id="loginform" class="rounded">
-          <input type="text" name="login" id="username" placeholder="Votre pseudo" autocomplete="off">
-          <!-- <input type="text" name="mail" id="mail" placeholder="Votre Email" autocomplete="off"> -->
-          <input type="submit" id="senduser" value="Envoyer">
-      </form><br>
-    </div>
+      <p>Ceci est un chat en Node.js , entrez votre pseudo </p>
+    </header>
     <div class="userinchat">
 
     </div>
-      <div id="messages" >
-        <div class="message" id="msgtpl" style="display:none;">
-          <div class="info">
-            <p><strong>{{user}}</strong></p>
-              <p>{{message}}</p>
-            <span class="date">{{date}}</span>
-          </div>
+    
+    <main id="messages" >
+      <form action="" id="loginform" class="log">
+        <input type="text" name="login" id="username" placeholder="Votre pseudo" autocomplete="off">
+        <input type="text" name="pass" id="password" placeholder="Votre pass" autocomplete="off">
+        <input type="submit" id="senduser" value="Envoyer">
+      </form>
+      <form action="" id="registerform">
+        <input type="text" name="login" id="username" placeholder="Votre pseudo" autocomplete="off">
+        <input type="text" name="pass" id="password" placeholder="Votre pass" autocomplete="off">
+        <input type="submit" id="registeruser" value="Envoyer">
+      </form>
+      <div class="message" id="msgtpl" style="display:none;">
+        <div class="info">
+          <p class><strong>{{user}}</strong></p>
+          <p>{{message}}</p>
+          <span class="date">{{date}}</span>
         </div>
       </div>
-        <form action="" id="tchatinput" class="text-center fixed-bottom rounded mb-4">
-          <input id="message" autocomplete="off" placeholder="Votre message">
-          <input id="m" type="submit" value="Envoyer">
-        </form>
-    
+    </main>
+
+    <footer>
+      <form action="" id="tchatinput">
+        <input id="message" autocomplete="off" placeholder="Votre message">
+        <input id="m" type="submit" value="Envoyer">
+      </form>
+    </footer>
     
     <script src="/socket.io/socket.io.js"></script>
     <script src="/mustache.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="/user.js"></script>
+
   </body>
 </html>
