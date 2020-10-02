@@ -9,7 +9,7 @@
     $('#loginform').submit((event)=>{
         event.preventDefault();
         socket.emit('login' , {
-            username : $('#username').val(),
+            username : $('#usernamelogin').val(),
         }); 
       });
 
@@ -39,13 +39,15 @@
       // RECUP LE MODEL
       // ET DISPLAY LE MSG
       // if ($('#messages')[0].childElementCount >= 5) $('#messages')[0].removeChild($('#messages')[0].children[0]);
+
       $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
+      window.scrollTo(0,document.body.scrollHeight);
     })
 
     // RECUP DES MESSAGE LORS DE LA CO DE L USER
     socket.on('displaymessages' , (allmessages) =>{
       for(let k = allmessages.length -1 ; k >= 0 ; k--){
-        $('#messages').append('<div class="message">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+        $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
       }
     })
 
