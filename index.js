@@ -84,6 +84,7 @@ io.sockets.on('connection', (socket) => {
       const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
       socket.emit('displaymessages', allmessages );
       io.sockets.emit('newuser' , me);
+      console.log(me);
 
     });
     // ON A RECU UN MSG
