@@ -74,16 +74,12 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('newuser', () =>{
       $('#userinchat').append('<img src="' + user.avatar + '" id="' + user.id + '">');
-    })
+    });
 
     // LOGIN 
     socket.on('login' , async (user , req , res)=>{
-       await User.find((data) => data).where({username: user.username , password: MD5(user.password)}).exec(async (err , users) =>{
-        if(err){
-          console.log('Error : ' +err);
-        }else{
-          console.log("CECI EST DANS USERS : "+this.username);
-          if(user.username === users.username){
+       let userinDB =  await User.findOne({username: user.username , password: MD5(user.password)});
+          if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
             me = user;
             socket.emit('logged');
             users[me.id] = me;
@@ -92,18 +88,11 @@ io.sockets.on('connection', (socket) => {
             io.sockets.emit('newuser' , me);
             console.log("CECI EST DANS LA VAR ME"+me);
           }else{
-            console.log('ON EST DANS LE ELSE !!!!! FFS');
-
+            socket.emit('badlogin');
           }
-        }
+        });
         
-      });
-      
-      
-      
-   
-      
-    });
+    
     // ON A RECU UN MSG
     socket.on('newmsg' , (message) =>{
       message.user = me;

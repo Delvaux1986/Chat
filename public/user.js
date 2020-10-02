@@ -70,7 +70,10 @@
       $('#message').focus();
       $('#registerform').fadeOut();
     })
-
+    // BAD LOGIN OR PASSWORD FOR USER
+    socket.on('badlogin', () =>{
+      $('#errorlogin').append('Mauvais login ou password !!!');
+    })
 
 
 
