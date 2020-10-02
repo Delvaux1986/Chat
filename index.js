@@ -89,12 +89,10 @@ io.sockets.on('connection', (socket) => {
             if(userinDB !== null){
               if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
                 me = user;
-                socket.emit('logged');
                 users[me.id] = me;
                 const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
-                socket.emit('displaymessages', allmessages );
+                socket.emit('logged', allmessages );
                 io.sockets.emit('newuser' , me);
-                console.log("CECI EST DANS LA VAR ME"+me);
               }
             }else{
               socket.emit('badlogin')
@@ -123,15 +121,23 @@ io.sockets.on('connection', (socket) => {
         });
       });
       socket.on('register' , async (user) => {
-        console.log(user);
-        let newuser = new User({username: user.username , password: MD5(user.password)});
-        newuser.save((err)=>{
+        let userinDB =  await User.findOne({username: user.username });
+        if(userinDB !== null){
+          socket.emit('badregister');
+        }else{
+          let newuser = new User({username: user.username , password: MD5(user.password)});
+          newuser.save(async(err)=>{
           if(!err){
-          console.log("User bien enregistrer");
-          io.sockets.emit('registed');
+            console.log("User bien enregistrer");
+            const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
+            socket.emit('logged' , allmessages);
+          }else{
+            console.log("Error : " +err)
           }
-          else{console.log("Error : " +err)}
         });
+        }
+        // VERIF SI USERNAME EXIST DEJA 
+        
 
       })
       

@@ -14,11 +14,17 @@
         }); 
       });
 
-      socket.on('logged' , ()=>{
+      socket.on('logged' , (allmessages)=>{
             $('#loginform').fadeOut();
             $('#registerform').fadeOut();
             $('#tchatinput').fadeIn();
             $('#message').focus();
+            for(let k = allmessages.length -1 ; k >= 0 ; k--){
+              let date = new Date(allmessages[k].date);
+              allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
+              $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+            }
+            window.scrollTo(0,document.body.scrollHeight);
           });
 
       socket.on('newuser' , (me) => {
@@ -52,12 +58,12 @@
 
     // RECUP DES MESSAGE LORS DE LA CO DE L USER
     socket.on('displaymessages' , (allmessages) =>{
-      for(let k = allmessages.length -1 ; k >= 0 ; k--){
-        let date = new Date(allmessages[k].date);
-        allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
-        $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
-      }
-      window.scrollTo(0,document.body.scrollHeight);
+      // for(let k = allmessages.length -1 ; k >= 0 ; k--){
+      //   let date = new Date(allmessages[k].date);
+      //   allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
+      //   $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+      // }
+      // window.scrollTo(0,document.body.scrollHeight);
     });
 
     // Inscription
@@ -68,13 +74,16 @@
       $('#usernameregister').val('');
       $('#passwordregister').val('');
       $('#message').focus();
-      $('#registerform').fadeOut();
     })
-    // BAD LOGIN OR PASSWORD FOR USER
+    // BAD LOGIN OR PASSWORD FOR USER 
     socket.on('badlogin', () =>{
       $('#errorlogin').append('Mauvais login ou password !!!');
     })
+    // BAD REGISTER ALLREADY EXIST
+    socket.on('badregister', ()=>{
+      $('#errorregister').append('Ce pseudo éxiste déja !!!');
 
+    })
 
 
 
