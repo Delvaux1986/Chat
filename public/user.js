@@ -16,6 +16,7 @@
 
       socket.on('logged' , ()=>{
             $('#loginform').fadeOut();
+            $('#registerform').fadeOut();
             $('#message').focus();
           });
 

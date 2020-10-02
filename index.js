@@ -78,23 +78,38 @@ io.sockets.on('connection', (socket) => {
 
     // LOGIN 
     socket.on('login' , async (user , req , res)=>{
-      me = user;
-      socket.emit('logged');
-      users[me.id] = me;
-      const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
-      socket.emit('displaymessages', allmessages );
-      io.sockets.emit('newuser' , me);
-      console.log(me);
+       await User.find((data) => data).where({username: user.username , password: MD5(user.password)}).exec(async (err , users) =>{
+        if(err){
+          console.log('Error : ' +err);
+        }else{
+          console.log("CECI EST DANS USERS : "+this.username);
+          if(user.username === users.username){
+            me = user;
+            socket.emit('logged');
+            users[me.id] = me;
+            const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
+            socket.emit('displaymessages', allmessages );
+            io.sockets.emit('newuser' , me);
+            console.log("CECI EST DANS LA VAR ME"+me);
+          }else{
+            console.log('ON EST DANS LE ELSE !!!!! FFS');
 
+          }
+        }
+        
+      });
+      
+      
+      
+   
+      
     });
     // ON A RECU UN MSG
     socket.on('newmsg' , (message) =>{
       message.user = me;
       message.date = new Date();
       console.log(message);
-       // QUAND DB OK DELETE
-      let msg = new Msg({user: message.user.usernamelogin , message: message.message , date: message.date});
-      console.log(msg);
+      let msg = new Msg({user: message.user.username , message: message.message , date: message.date});
         msg.save((err)=>{
           if(!err){
           console.log("Data Bien ajouté.");
