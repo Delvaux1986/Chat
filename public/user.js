@@ -10,6 +10,7 @@
         event.preventDefault();
         socket.emit('login' , {
             username : $('#username').val(),
+            mail : $('#email').val()
         }); 
       });
 
@@ -19,7 +20,9 @@
           });
 
       socket.on('newuser' , (me) => {
-          console.log(`${me} est connecté`);
+          console.log(`${me.username} est connecté`);
+          return me;
+
         });
       socket.on('userdisco', (userinchat) =>{
         $('#userinchat').append(`<span class="nombreuser">Il y a ${userinchat} Personne(s) de connectée(s)</span>` );
@@ -34,9 +37,7 @@
       $('#message').focus();
     });
 
-    // socket.on('newmsg' , (message)=>{
-    //   $('#messages').append('<div class="message">' + Mustache.render(msgtpl, message) + '</div>');
-    // })
+   
     socket.on('newmsg' , (msg) => {
       // RECUP LE MODEL
       // ET DISPLAY LE MSG
@@ -49,6 +50,20 @@
       for(let k = allmessages.length -1 ; k >= 0 ; k--){
         $('#messages').append('<div class="message">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
       }
+    });
+
+    // Inscription
+    $('#registerform').submit((event) =>{
+      event.preventDefault();
+      socket.emit('register', {login: $('#')})
     })
+
+
+
+
+
+
+
+
 
   })(jQuery);

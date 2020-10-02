@@ -34,7 +34,11 @@ form button{
     
     background-color: white;
 }
-
+#loginform{
+    position:absolute;
+    left:0;
+    top:0;
+}
 #messages{ 
     display:flex;
     flex-direction: column;

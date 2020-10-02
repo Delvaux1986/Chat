@@ -2,12 +2,19 @@
 const mongoose = require('mongoose');
 const Msg = require('./models/Message');
 let express = require('express');
+const MD5 = require('MD5');
 let app = express();
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+const redis = require('redis');
+const redisStore = require('connect-redis')(session);
 let path = require('path');
+const md5 = require('MD5');
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
 const port =  5000;
-let msg = "" ;
+let msg ;
+let sess;
 
 // COTER SERVER
 
@@ -28,23 +35,31 @@ mongoose
           console.log(err);
       });
 
-// server.listen(port, () => {
-//   console.log('Server listening at port %d', port);
-// });
 
+// ON REND LE SERV STATIC ON INIT COOKIEPARSER ET EXPRESS SESSION
 app.use(express.static(path.join(__dirname, 'public')));
-  
+app.use(cookieParser());
+
+
+// PAGE D ACCEUIL
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-  
+  let sess = req.session;
+    if(sess.email) {
+        return res.redirect(__dirname + '/views/admin');
+    }
+    res.sendFile(__dirname + '/public/index.html');
 });
 
+  
 
-io.on('connection', (socket) => {
-    console.log(`a user as Connected .`);
+
+
+io.on('connection', (socket , me) => {
+    console.log(`PPL as Connected .`);
+    
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log(`PPL disconnected`);
     });
   });
 
@@ -57,15 +72,16 @@ io.sockets.on('connection', (socket) => {
         socket.emit('newuser', users[k]);
     }
 
-
+    socket.on('newuser', () =>{
+      $('#userinchat').append('<img src="' + user.avatar + '" id="' + user.id + '">');
+    })
 
     // LOGIN 
-    socket.on('login' , async (user)=>{
+    socket.on('login' , async (user , req , res)=>{
       me = user;
-      me.id = userinchat++;
+      
       socket.emit('logged');
       users[me.id] = me;
-      //--------------------------
       const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(5);
       socket.emit('displaymessages', allmessages );
       io.sockets.emit('newuser' , me);

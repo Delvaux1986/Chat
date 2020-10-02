@@ -30,9 +30,18 @@ Nous avons commencé le projet de group le mercredi 30 septembre 2020
 
 1. Html (structure)
 2. Javascript
-    1. Node.js
+    1. Socket.io
     2. Express.js
-    3. Socket.IO
+    3. Node.js
+        ##### Dépendances pour ce Projet
+        1. Nodemon
+        2. MongoDB
+        3. Mongoose
+        4. MD5
+        5. Mustache
+        6. Express Session
+        7. Cookie Parser
+        8. Connect Redis       
 
 
 ## Ou en sommes nous  :

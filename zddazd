@@ -1,0 +1,14 @@
+ if(req.session.page_views){
+    req.session.page_views++;
+    res.sendFile(__dirname + '/public/index.html');
+    res.set('Content-Type', 'text/html');
+    res.end("<p class='text-center'>You visited this page " + req.session.page_views + " times</p>");
+    console.log(req.session);
+ } else {
+    req.session.page_views = 1;
+    res.sendFile(__dirname + '/public/index.html');
+    res.set('Content-Type', 'text/html');
+    res.end("<p class='text-center'>Welcome to this page for the first time!</p>");
+    console.log(req.session);
+ }
+});
