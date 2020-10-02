@@ -55,7 +55,11 @@
     // Inscription
     $('#registerform').submit((event) =>{
       event.preventDefault();
-      socket.emit('register', {login: $('#')})
+      socket.emit('register', {login: $('#username').val() , password: $('#password').val()});
+      $('#username').val('');
+      $('#password').val('');
+      $('#message').focus();
+      $('#registerform').fadeOut();
     })
 
 
