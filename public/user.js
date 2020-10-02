@@ -38,7 +38,7 @@
     socket.on('newmsg' , (msg) => {
       // RECUP LE MODEL
       // ET DISPLAY LE MSG
-      if ($('#messages')[0].childElementCount >= 5) $('#messages')[0].removeChild($('#messages')[0].children[0]);
+      // if ($('#messages')[0].childElementCount >= 5) $('#messages')[0].removeChild($('#messages')[0].children[0]);
       $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
     })
 

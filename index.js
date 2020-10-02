@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const mongoose = require('mongoose');
 const Msg = require('./models/Message');
+const User = require('./models/User');
 let express = require('express');
 let app = express();
 let path = require('path');
@@ -66,7 +67,7 @@ io.sockets.on('connection', (socket) => {
       socket.emit('logged');
       users[me.id] = me;
       //--------------------------
-      const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(5);
+      const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
       socket.emit('displaymessages', allmessages );
       io.sockets.emit('newuser' , me);
 
