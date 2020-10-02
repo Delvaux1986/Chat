@@ -78,18 +78,30 @@ io.sockets.on('connection', (socket) => {
 
     // LOGIN 
     socket.on('login' , async (user , req , res)=>{
-       let userinDB =  await User.findOne({username: user.username , password: MD5(user.password)});
-          if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
-            me = user;
-            socket.emit('logged');
-            users[me.id] = me;
-            const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
-            socket.emit('displaymessages', allmessages );
-            io.sockets.emit('newuser' , me);
-            console.log("CECI EST DANS LA VAR ME"+me);
-          }else{
-            socket.emit('badlogin');
-          }
+      try{
+            let userinDB =  await User.findOne({username: user.username , password: MD5(user.password)}, (err ,  result)=>{
+              if(err){
+              console.log('Error : ' +err);
+              throw "erreurs";
+            }else{
+              return result;
+            }});
+            if(userinDB !== null){
+              if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
+                me = user;
+                socket.emit('logged');
+                users[me.id] = me;
+                const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
+                socket.emit('displaymessages', allmessages );
+                io.sockets.emit('newuser' , me);
+                console.log("CECI EST DANS LA VAR ME"+me);
+              }
+            }else{
+              socket.emit('badlogin')
+          };
+        }catch(err){
+          console.log(err);
+        }
         });
         
     
