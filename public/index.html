@@ -16,20 +16,21 @@
     
     <main id="messages" >
       <form action="" id="loginform" class="userform">
-        <input type="text" name="login" id="usernamelogin" placeholder="Votre pseudo" autocomplete="off">
-        <input type="password" name="pass" id="passwordlogin" placeholder="Votre pass" autocomplete="off">
+        <p>Se connecter</p>
+        <input type="text" name="login" id="usernamelogin" placeholder="Votre pseudo" autocomplete="off" required>
+        <input type="password" name="pass" id="passwordlogin" placeholder="Votre pass" autocomplete="off" required>
         <input type="submit" id="senduser" value="Login">
       </form>
       <form action="" id="registerform" class="userform">
-        <input type="text" name="login" id="usernameregister" placeholder="Votre pseudo" autocomplete="off">
-        <input type="password" name="pass" id="passwordregister" placeholder="Votre pass" autocomplete="off">
+        <p>S'enregistrer</p>
+        <input type="text" name="login" id="usernameregister" placeholder="Votre pseudo" autocomplete="off" required>
+        <input type="password" name="pass" id="passwordregister" placeholder="Votre pass" autocomplete="off" required>
         <input type="submit" id="registeruser" value="Register">
       </form>
       <div class="message" id="msgtpl" style="display:none;">
         <div class="info">
-          <p class><strong>{{user}}</strong></p>
-          <p>{{message}}</p>
-          <span class="date">{{date}}</span>
+          <p class="messagebody"><strong>{{user}}</strong> : {{message}}</p>
+          <p class="messagedate">{{date}}</p>
         </div>
       </div>
     </main>

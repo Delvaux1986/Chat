@@ -84,7 +84,6 @@ io.sockets.on('connection', (socket) => {
       const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
       socket.emit('displaymessages', allmessages );
       io.sockets.emit('newuser' , me);
-      console.log(me);
 
     });
     // ON A RECU UN MSG
@@ -93,7 +92,7 @@ io.sockets.on('connection', (socket) => {
       message.date = new Date();
       console.log(message);
        // QUAND DB OK DELETE
-      let msg = new Msg({user: message.user.usernamelogin , message: message.message , date: message.date});
+      let msg = new Msg({user: message.user.username , message: message.message , date: message.date});
       console.log(msg);
         msg.save((err)=>{
           if(!err){
