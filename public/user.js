@@ -19,6 +19,7 @@
             $('#registerform').fadeOut();
             $('#tchatinput').fadeIn();
             $('#message').focus();
+            $('#btndisc').fadeIn();
             for(let k = allmessages.length -1 ; k >= 0 ; k--){
               let date = new Date(allmessages[k].date);
               allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
@@ -28,8 +29,8 @@
           });
 
       socket.on('newuser' , (me) => {
-          console.log(`${me.username} est connecté`);
-          return me;
+        $('#messages').append(`<span> ${me.username} vient de se connecter .</span>`);
+        console.log(`${me.username} vient de se connecter .`);
 
         });
       socket.on('userdisco', (userinchat) =>{
@@ -47,8 +48,6 @@
 
     // L'utilisateur reçoit le call 'newmsg'
     socket.on('newmsg' , (msg) => {
-      // RECUP LE MODEL
-      // ET DISPLAY LE MSG
       let date = new Date(msg.date);
       msg.date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
       if ($('#messages')[0].childElementCount >= 20) $('#messages')[0].removeChild($('#messages')[0].children[0]);
@@ -56,15 +55,6 @@
       window.scrollTo(0,document.body.scrollHeight);
     })
 
-    // RECUP DES MESSAGE LORS DE LA CO DE L USER
-    socket.on('displaymessages' , (allmessages) =>{
-      // for(let k = allmessages.length -1 ; k >= 0 ; k--){
-      //   let date = new Date(allmessages[k].date);
-      //   allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
-      //   $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
-      // }
-      // window.scrollTo(0,document.body.scrollHeight);
-    });
 
     // Inscription
     $('#registerform').submit((event) =>{
@@ -84,7 +74,23 @@
       $('#errorregister').append('Ce pseudo éxiste déja !!!');
 
     })
-
+    // LIST PPL ON CHAT 
+    socket.on('chatcount', (chatcount) => {
+      
+      console.log(chatcount);
+      $('#userinchat').append(`<p>Il y a ${chatcount} personnes dans le Chat .</p>`);
+    })
+    // USER GONNA DISCONNECTED
+    $('#discbtn').submit((event , me , res) => {
+      event.preventDefault();
+      $('#messages').fadeOut();
+      $('#tchatinput').fadeOut();
+      $('#btndisc').fadeOut();
+      $('#loginform').fadeIn();
+      
+      sockets.io.emit('thisuserdisco', me);
+    })
+    
 
 
 

@@ -6,9 +6,7 @@ let express = require('express');
 const MD5 = require('MD5');
 let app = express();
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
-const redis = require('redis');
-const redisStore = require('connect-redis')(session);
+// const redisStore = require('connect-redis')(session);
 let path = require('path');
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
@@ -74,6 +72,8 @@ io.sockets.on('connection', (socket) => {
 
     socket.on('newuser', () =>{
       $('#userinchat').append('<img src="' + user.avatar + '" id="' + user.id + '">');
+      let PPLinChat = io.sockets.clients();
+      socket.emit('chatcount', PPLinChat);
     });
 
     // LOGIN 
@@ -93,6 +93,7 @@ io.sockets.on('connection', (socket) => {
                 const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
                 socket.emit('logged', allmessages );
                 io.sockets.emit('newuser' , me);
+                
               }
             }else{
               socket.emit('badlogin')
@@ -136,14 +137,18 @@ io.sockets.on('connection', (socket) => {
           }
         });
         }
-        // VERIF SI USERNAME EXIST DEJA 
-        
-
       })
       
     
 
     // UN UTILISATEUR SE DECO
+    socket.on('thisuserdisco' , () => {
+      me = [];
+      console.log(me);
+    })
+    
+    
+    
     socket.on('disconnect', (userinchat) =>{
       if(!me){
         return false;
@@ -153,6 +158,7 @@ io.sockets.on('connection', (socket) => {
     })
     
   });
+
   
 
 
