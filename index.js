@@ -10,7 +10,7 @@ var cookieParser = require('cookie-parser');
 let path = require('path');
 let server = require('http').createServer(app);
 let io = require('socket.io')(server);
-const port =  5000;
+// const port =  5000;
 let msg ;
 let sess;
 
