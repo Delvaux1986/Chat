@@ -1,5 +1,5 @@
 (function($) {
-    let socket = io.connect('http://localhost:5000');
+    let socket = io.connect();
     let msgtpl = $('#msgtpl').html();
     $('#msgtpl').remove();
       // COTER CLT
