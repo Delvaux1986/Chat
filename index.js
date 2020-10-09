@@ -27,7 +27,8 @@ mongoose
         useCreateIndex: true,
       })
       .then(() => {
-          server.listen(port, () => console.log(`Server and Database running on ${port}, http://localhost:${port}` ));
+          // server.listen(port, () => console.log(`Server and Database running on ${port}, http://localhost:${port}` )); TEST ON HEROKU
+          server.listen(process.env.PORT || 5000, () => console.log(`Server and Database running on` ) );
       })
       .catch((err) => {
           console.log(err);
