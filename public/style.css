@@ -75,8 +75,7 @@ main {
   }
 .message {
     background-color: white;
-    /* margin: 1rem 50% 1rem auto; */
-    margin: 1rem auto 1rem 50%; /* A supprimer */
+    margin: 1rem 50% 1rem auto;
     width: 15rem;
     border: 0.15rem solid black;
     border-radius: 1rem;
@@ -85,7 +84,6 @@ main {
 
 .message-old {
     background-color: lightgrey;
-    margin: 1rem 50% 1rem auto; /* A supprimer */
 }
 
 .message-self {
