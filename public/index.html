@@ -8,6 +8,7 @@
 
     <header id="login">
       <h1>Bienvenue</h1>
+      <p>Le chat de Becode Réalisé par : Bastien , Nathan , Albert et Robby</p>
     </header>
     <div class="userinchat">
 
@@ -30,7 +31,7 @@
       </form>
       <div class="message" id="msgtpl" style="display:none;">
         <div class="info">
-          <p class="messagebody"><strong>{{user}}</strong> : {{message}}</p>
+          <p class="messagebody"><strong>{{user}}</strong></p>:<br><p class="messagecontent">{{message}}</p>
           <p class="messagedate">{{date}}</p>
         </div>
       </div>
@@ -44,6 +45,7 @@
       <form action="" id="discbtn">
         <input type="submit" value="Disconnect"  id="btndisc"style="display:none;">
       </form>
+      <div class="bg"></div>
     </footer>
     
     <script src="/socket.io/socket.io.js"></script>

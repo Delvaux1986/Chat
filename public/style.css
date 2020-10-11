@@ -4,7 +4,15 @@
     text-align: center;
     /* box-sizing:border-box; */
 }
-
+body {
+    background: linear-gradient(135deg, #044f48, #2a7561);
+    background-size: cover;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.3;
+    overflow: hidden;
+  }
+  
 header, footer {
     position: fixed;
     width: 100%;
@@ -32,7 +40,39 @@ main {
     flex-direction: column;
     background-color: #99aab5;
 }
+/* .messages {
+    flex: 1 1 auto;
+    color: rgba(255, 255, 255, .5);
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}    
 
+
+.message {
+      clear: both;
+      float: left;
+      padding: 6px 10px 7px;
+      border-radius: 10px 10px 10px 0;
+      background: rgba(0, 0, 0, .3);
+      margin: 8px 0;
+      font-size: 11px;
+      line-height: 1.4;
+      margin-left: 35px;
+      position: relative;
+      text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+} */
+
+.bg {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: url('https://images.unsplash.com/photo-1451186859696-371d9477be93?crop=entropy&fit=crop&fm=jpg&h=975&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1925') no-repeat 0 0;
+    filter: blur(80px);
+    transform: scale(1.2);
+  }
 .message {
     background-color: white;
     /* margin: 1rem 50% 1rem auto; */
@@ -51,14 +91,61 @@ main {
 .message-self {
     margin: 1rem auto 1rem 50%;
 }
-
+/*--------------------
+Message Box
+--------------------*/
+#tchatinput {
+    flex: 0 1 40px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    position: relative;
+}    
+#tchatinput  #message {
+      background: none;
+      border: none;
+      outline: none!important;
+      resize: none;
+      color: rgba(255, 255, 255, .7);
+      font-size: 11px;
+      height: 17px;
+      margin: 0;
+      padding-right: 20px;
+      width: 265px;
+}
+    
+textarea:focus:-webkit-placeholder{
+        color: transparent;
+}
+#m{
+      position: absolute;
+      z-index: 1;
+      top: 9px;
+      right: 10px;
+      color: #fff;
+      border: none;
+      background: #248A52;
+      font-size: 10px;
+      text-transform: uppercase;
+      line-height: 1;
+      padding: 6px 10px; 
+      border-radius: 10px;
+      outline: none!important;
+      transition: background .2s ease;
+}      
+#m {
+        background: #1D7745;
+      }
+    
+  
 .messagebody {
     margin: 0.5rem;
     font-size: 1.5rem;
+    color: #0000FF;
 }
-
-.messagedate {
-    margin: 0.2rem;
+.messagecontent{
+    font-size: 1.5rem;
+    color:black;
 }
 
 .userform {
