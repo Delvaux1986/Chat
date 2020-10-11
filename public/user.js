@@ -41,7 +41,7 @@
     // L'utilisateur envoit un message
     $('#tchatinput').submit((event, message) => {
       event.preventDefault();
-      socket.emit('newmsg' , {message: $('#message').val() });
+      socket.emit('newmsg' , {message: $('#message').val() , user: $('#usernamelogin').val() });
       $('#message').val('');
       $('#message').focus();
     });

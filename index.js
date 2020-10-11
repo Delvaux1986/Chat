@@ -16,7 +16,7 @@ let sess;
 
 // COTER SERVER
 
-let me = false;
+let me = [];
 let userinchat = 0;
 let users = {};
 
@@ -89,11 +89,11 @@ io.sockets.on('connection', (socket) => {
             }});
             if(userinDB !== null){
               if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
-                me = user;
-                users[me.id] = me;
+                me.push(user);
+                // users[me.id] = me;
                 const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
                 socket.emit('logged', allmessages );
-                io.sockets.emit('newuser' , me);
+                io.sockets.emit('newuser' , user);
                 
               }
             }else{
@@ -107,11 +107,12 @@ io.sockets.on('connection', (socket) => {
     
     // ON A RECU UN MSG
     socket.on('newmsg' , (message) =>{
-      message.user = me;
+      console.log(message);
       message.date = new Date();
+
       console.log(message);
        // QUAND DB OK DELETE
-      let msg = new Msg({user: message.user.username , message: message.message , date: message.date});
+      let msg = new Msg({user: message.user , message: message.message , date: message.date});
       console.log(msg);
         msg.save((err)=>{
           if(!err){
