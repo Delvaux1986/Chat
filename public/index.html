@@ -10,11 +10,15 @@
       <h1>Bienvenue</h1>
       <p>Le chat de Becode Réalisé par : Bastien , Nathan , Albert et Robby</p>
     </header>
-    <div class="userinchat">
+    <div class="userslist">
+      <ol id="usersinchat">
+        
+      </ol>
 
     </div>
     
-    <main id="messages" >
+  <main id="messages" >
+    
       <form action="" id="loginform" class="userform">
         <p>Se connecter</p>
         <input type="text" name="login" id="usernamelogin" placeholder="Votre pseudo" autocomplete="off" required>
@@ -35,14 +39,15 @@
           <p class="messagedate">{{date}}</p>
         </div>
       </div>
-    </main>
+    
+  </main>
 
     <footer>
       <form action="" id="tchatinput">
         <input id="message" autocomplete="off" placeholder="Votre message">
         <input id="m" type="submit" value="Envoyer">
       </form>
-      <form action="" id="discbtn">
+      <form action="" id="discbtn" >
         <input type="submit" value="Disconnect"  id="btndisc"style="display:none;">
       </form>
       <div class="bg"></div>

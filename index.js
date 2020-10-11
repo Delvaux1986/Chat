@@ -16,7 +16,7 @@ let sess;
 
 // COTER SERVER
 
-let me = [];
+let userlist = [];
 let userinchat = 0;
 let users = {};
 
@@ -89,10 +89,11 @@ io.sockets.on('connection', (socket) => {
             }});
             if(userinDB !== null){
               if(user.username === userinDB.username && MD5(user.password) === userinDB.password){
-                me.push(user);
+                userlist.push(user.username);
                 // users[me.id] = me;
                 const allmessages = await Msg.find((data) => data).sort({'date': -1}).limit(10);
                 socket.emit('logged', allmessages );
+                io.sockets.emit('userlistchange', userlist);
                 io.sockets.emit('newuser' , user);
                 
               }
@@ -107,16 +108,12 @@ io.sockets.on('connection', (socket) => {
     
     // ON A RECU UN MSG
     socket.on('newmsg' , (message) =>{
-      console.log(message);
       message.date = new Date();
-
-      console.log(message);
        // QUAND DB OK DELETE
       let msg = new Msg({user: message.user , message: message.message , date: message.date});
-      console.log(msg);
         msg.save((err)=>{
           if(!err){
-          console.log("Data Bien ajouté.");
+          console.log("Message send");
           io.sockets.emit('newmsg', msg);
           }
           else{console.log("Error : " +err)}
@@ -144,20 +141,21 @@ io.sockets.on('connection', (socket) => {
     
 
     // UN UTILISATEUR SE DECO
-    socket.on('thisuserdisco' , () => {
-      me = [];
+    socket.on('thisuserdisco' , (me) => {
       console.log(me);
+      userlist.splice(userlist.indexOf(me.user), 1);
+      io.sockets.emit('userlistchange', userlist);
     })
     
     
     
-    socket.on('disconnect', (userinchat) =>{
-      if(!me){
-        return false;
-      }
-      me.id = userinchat--;
-      io.sockets.emit('userdisco' , me);
-    })
+    // socket.on('disconnect', (userinchat) =>{
+    //   if(!me){
+    //     return false;
+    //   }
+    //   me.id = userinchat--;
+    //   io.sockets.emit('userdisco' , userlist);
+    // })
     
   });
 

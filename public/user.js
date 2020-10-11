@@ -1,6 +1,7 @@
 (function($) {
     let socket = io.connect();
     let msgtpl = $('#msgtpl').html();
+    let userinchattpl = $('#usersinchat').html();
     let user = "";
     $('#msgtpl').remove();
       // COTER CLT
@@ -86,20 +87,23 @@
 
     })
     // LIST PPL ON CHAT 
-    socket.on('chatcount', (chatcount) => {
+    socket.on('userlistchange', (userlist) => {
+      $('#usersinchat').empty();
+        userlist.forEach(element => {
+          $('#usersinchat').append(`<li> ${element} </li>`);
+      });
       
-      console.log(chatcount);
-      $('#userinchat').append(`<p>Il y a ${chatcount} personnes dans le Chat .</p>`);
+      
+      
     })
     // USER GONNA DISCONNECTED
-    $('#discbtn').submit((event , me , res) => {
+    $('#discbtn').submit((event) => {
       event.preventDefault();
       $('#messages').fadeOut();
       $('#tchatinput').fadeOut();
       $('#btndisc').fadeOut();
-      $('#loginform').fadeIn();
-      
-      sockets.io.emit('thisuserdisco', me);
+      $('#loginform').fadeIn();      
+      socket.emit('thisuserdisco', {user: user});
     })
     
 

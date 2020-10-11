@@ -36,11 +36,20 @@ footer {
 main {
     min-height: calc(100vh - 10rem);
     padding: 5rem 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     background-color: #99aab5;
 }
-
+.userslist{
+    position:fixed;
+    left:0px;
+    top:300px;
+    color:white;
+    z-index: 15;
+    /* height:30rem;
+    width: 5rem; */
+}
 .message {
     background-color: white;
     margin: 1rem 50% 1rem auto;
