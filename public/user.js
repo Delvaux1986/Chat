@@ -1,6 +1,7 @@
 (function($) {
     let socket = io.connect();
     let msgtpl = $('#msgtpl').html();
+    let user = "";
     $('#msgtpl').remove();
       // COTER CLT
 
@@ -20,10 +21,11 @@
             $('#tchatinput').fadeIn();
             $('#message').focus();
             $('#btndisc').fadeIn();
+            user = $('#usernamelogin').val();
             for(let k = allmessages.length -1 ; k >= 0 ; k--){
               let date = new Date(allmessages[k].date);
               allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
-              if ($('#usernamelogin').val() === allmessages[k].user) {
+              if (user === allmessages[k].user) {
                 $('#messages').append('<div class="message message-old message-self">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
               } else {
                 $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
@@ -45,7 +47,7 @@
     // L'utilisateur envoit un message
     $('#tchatinput').submit((event, message) => {
       event.preventDefault();
-      socket.emit('newmsg' , {message: $('#message').val() , user: $('#usernamelogin').val() });
+      socket.emit('newmsg' , {message: $('#message').val() , user: user });
       $('#message').val('');
       $('#message').focus();
     });
@@ -56,7 +58,7 @@
       let date = new Date(msg.date);
       msg.date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
       if ($('#messages')[0].childElementCount >= 20) $('#messages')[0].removeChild($('#messages')[0].children[0]);
-      if ($('#usernamelogin').val() === msg.user) {
+      if (user === msg.user) {
         $('#messages').append('<div class="message message-self">' + Mustache.render(msgtpl, msg) + '</div>');
       } else {
         $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
