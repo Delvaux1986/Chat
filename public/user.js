@@ -23,7 +23,11 @@
             for(let k = allmessages.length -1 ; k >= 0 ; k--){
               let date = new Date(allmessages[k].date);
               allmessages[k].date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
-              $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+              if ($('#usernamelogin').val() === allmessages[k].user) {
+                $('#messages').append('<div class="message message-old message-self">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+              } else {
+                $('#messages').append('<div class="message message-old">' + Mustache.render(msgtpl, allmessages[k]) + '</div>');
+              }
             }
             window.scrollTo(0,document.body.scrollHeight);
           });
@@ -48,10 +52,15 @@
 
     // L'utilisateur reçoit le call 'newmsg'
     socket.on('newmsg' , (msg) => {
+      console.log(msg);
       let date = new Date(msg.date);
       msg.date = date.getUTCDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear() + " @ " + date.getHours() + "h" + date.getMinutes();
       if ($('#messages')[0].childElementCount >= 20) $('#messages')[0].removeChild($('#messages')[0].children[0]);
-      $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
+      if ($('#usernamelogin').val() === msg.user) {
+        $('#messages').append('<div class="message message-self">' + Mustache.render(msgtpl, msg) + '</div>');
+      } else {
+        $('#messages').append('<div class="message">' + Mustache.render(msgtpl, msg) + '</div>');
+      }
       window.scrollTo(0,document.body.scrollHeight);
     })
 
