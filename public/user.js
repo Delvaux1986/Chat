@@ -102,10 +102,7 @@
     // USER GONNA DISCONNECTED
     $('#discbtn').submit((event) => {
       event.preventDefault();
-      $('#messages').fadeOut();
-      $('#tchatinput').fadeOut();
-      $('#btndisc').fadeOut();
-      $('#loginform').fadeIn();      
+      $('#messages').fadeOut();   
       socket.emit('thisuserdisco', {user: user});
       location.reload();
     })
